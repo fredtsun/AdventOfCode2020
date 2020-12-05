@@ -43,8 +43,8 @@ According to the above rules, your improved system would report 2 valid passport
 
 Count the number of valid passports - those that have all required fields. Treat cid as optional. In your batch file, how many passports are valid?
 '''
-from string_validation.rules import (All, CustomRule, Enum, Exists, Length,
-                                     Number, ObjectRule, Switch)
+from string_validation import (All, CustomRule, Enum, Exists, Length, Number,
+                               ObjectRule, Switch)
 from util import read_lines_as_list
 
 
