@@ -46,18 +46,18 @@ def build_graph():
 def part1():
     graph = build_graph()
     visited = {}
-    def traverse_graph(node):
+    def traverse(node):
         if node in visited:
             return visited[node]
         contains_shiny_gold = False
         for next_node, _ in graph[node]:
-            if next_node == 'shiny gold' or traverse_graph(next_node): 
+            if next_node == 'shiny gold' or traverse(next_node): 
                 contains_shiny_gold = True
                 break
         visited[node] = contains_shiny_gold
         return visited[node]
     for n in graph.keys():
-        traverse_graph(n)
+        traverse(n)
     return len([v for v in visited.values() if v])
 
 
