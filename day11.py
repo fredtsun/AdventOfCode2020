@@ -7,7 +7,7 @@ FLOOR = '.'
 INPUT_DATA = [list(row) for row in read_lines_as_list('data/day11.txt')]
 in_bounds = lambda x, y: 0 <= x < len(INPUT_DATA) and 0 <= y < len(INPUT_DATA[0])
 
-def simulate_round(seats, find_occupied_seat_fn, adjacent_seats_to_free):
+def simulate_round(seats, has_adjacent_occupied_seat_fn, adjacent_occupied_seats_to_free):
     new_seats = deepcopy(seats)
 
     def get_symbol(x, y):
@@ -18,16 +18,16 @@ def simulate_round(seats, find_occupied_seat_fn, adjacent_seats_to_free):
         directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
         if current_state == EMPTY:
             for dx, dy in directions:
-                if in_bounds(x + dx, y + dy) and find_occupied_seat_fn(x, dx, y, dy, seats):
+                if in_bounds(x + dx, y + dy) and has_adjacent_occupied_seat_fn(x, dx, y, dy, seats):
                     return EMPTY
             return OCCUPIED
         
         else: # current_state == OCCUPIED
-            count = 0
+            occupied_seats = 0
             for dx, dy in directions:
-                if in_bounds(x + dx, y + dy) and find_occupied_seat_fn(x, dx, y, dy, seats):
-                    count += 1
-            return EMPTY if count >= adjacent_seats_to_free else OCCUPIED
+                if in_bounds(x + dx, y + dy) and has_adjacent_occupied_seat_fn(x, dx, y, dy, seats):
+                    occupied_seats += 1
+            return EMPTY if occupied_seats >= adjacent_occupied_seats_to_free else OCCUPIED
 
     for i in range(len(seats)):
         for j in range(len(seats[0])):
